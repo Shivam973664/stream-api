@@ -3,9 +3,11 @@ package masterClass.interviewPractices;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,14 +18,17 @@ import java.util.stream.IntStream;
 
 import data.StudentDataBase;
 import diliptraining.entities.Student;
+import masterClass.SortingConcepts.Employee;
 
 public class TestOne {
 	static List<Integer> list = List.of(1, 3, 5,3, 1, 3, 6, 7, 2, 7, 9, 10, 9, 9, 9, 13);
 
+	static List<Integer> list2 = Arrays.asList(1,3,54365,75,43);
 	static List<String> nameList = Arrays.asList("Shivam", "Shivam", "Sujeet", "Sachin", "Krishna", "SAS",
 			"Indra");
 	
 	static  List<String> emails = Arrays.asList("singhshivam1705@gmail.com","shiva@tcs.com","shivam.KumarSing@google.com","shivam.Singh@flipkart.com");
+
 
 	//Question : 1
 	public static void printKfrequentElementIntheList() {
@@ -89,7 +94,15 @@ public class TestOne {
 		Map<String, List<Integer>> map = nameList.stream().collect(
 				Collectors.groupingBy(Function.identity(), Collectors.mapping(a -> a.length(), Collectors.toList())));
 		map.forEach((a, b) -> System.out.println(a + "" + b));
+		
+		
+//		Map<String, Long> map1 = nameList.stream().collect(
+//				Collectors.groupingBy(Function.identity(), Collectors.mapping(a -> a.length(), Collectors.reducing((a,b)-> a),0)));
+//		map1.forEach((a, b) -> System.out.println(a + "" + b));
+		
 		// but it will create list of values which is wrong
+		
+		
 
 		// we use map
 		Map<String, Integer> map2 = nameList.stream().collect(Collectors.toMap(Function.identity(), String::length));
@@ -383,6 +396,84 @@ public class TestOne {
 //				))
 //	}
 	
+	/// *** Chat Gpt Top 10 Interview Questions 
+	
+	//1. Find the second highest number in a list
+	public static void secondHighestNumber(List<Integer> list) {
+		Integer ans= list.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().orElseThrow();
+		System.out.println(ans);
+	}
+	
+	
+//	2. Find duplicate elements in a list
+	public static void duplicateElement(List<Integer> list) {
+		list.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+		.entrySet().stream().filter(a -> a.getValue()>=2).
+		forEach((c)-> System.out.println(c.getKey()));
+	}
+	
+	
+	//3. Count frequency of each character in a string
+	public static void countFrequency(String str) {
+		str.chars().mapToObj(c-> (char)c).
+		collect(Collectors.groupingBy(Function.identity(),Collectors.counting()))
+		.entrySet().forEach(System.out :: println);
+	}
+	
+	
+	//Q4. Find the first non-repeated character in a string
+	public static void findFirstNonRepeatedCharacter(String input) {
+		Character just= input.chars().mapToObj(c-> (char)c).
+		collect(Collectors.groupingBy(Function.identity(),LinkedHashMap:: new,Collectors.counting()))
+		.entrySet().stream().filter(a-> a.getValue()==1).map(a-> a.getKey()).findFirst().orElse('A');
+		System.out.println(just);
+	}
+	
+	//Q5 : Find the maximum element in a list
+	public static void findMax(List<Integer> input) {
+		Integer max= input.stream().max((a,b)-> a.compareTo(b)).orElse(0);
+		System.out.println(max);
+	}
+	
+	
+	//Q6 : Sort a list of strings by length
+	public static void sortStringListByLength(List<String> list){
+		List<String> rest = list.stream().sorted(Comparator.comparing(String :: length,Comparator.reverseOrder())).collect(Collectors.toList());
+		rest.forEach(System.out :: println);
+	}
+	
+	//Q7. Find the sum of all even numbers in a list
+	public static void findSumOfEvenNumbers(List<Integer> input ){
+//		int sum = input.stream().filter(a-> a%2==0).reduce(0,Integer :: sum);
+//		System.out.println(sum);
+		System.out.println(input.stream().mapToInt(Integer :: intValue).sum());
+	}
+	
+	//Q8. Group employees by department
+	public static void grpEmployeeByDepartment(){
+		List<Employee> empList = new ArrayList<>();
+		Employee emp1 = new Employee(1, "yoo yo", null, 0, null, "Singer", 2020, 200);
+		Employee emp2 = new Employee(2, "honey", null, 0, null, "Singer", 2020, 200);
+		Employee emp3 = new Employee(3, "Minato", null, 0, null, "Leaf", 2020, 200);
+		Employee emp4 = new Employee(4, "kakashi", null, 0, null, "Leaf", 2020, 200);
+		empList.addAll(Arrays.asList(emp1,emp2,emp3,emp4));
+		Map<String,List<Employee>> map =empList.stream().collect(Collectors.groupingBy(Employee ::getDepartment));
+		map.forEach((a,b)-> System.out.println(a + " " + b));
+	}
+	
+	//Q9 : Find the longest string in a list
+	public static void longestStringIntheList(List<String> input){
+		String res = input.stream().reduce("", (a,b)-> a.length()> b.length() ? a : b);
+		System.out.println(res);
+	}
+	
+	//Q10 : Find common elements between two lists
+	public static void commonBetweenList(List<Integer> input1 , List<Integer> input2){
+//		input1.stream().filter(a-> input2.contains(a)).forEach(System.out :: println);
+		input1.stream().filter(input2 :: contains).forEach(System.out :: print);
+
+	}
+	
 	public static void main(String[] args) {
 //		printKfrequentElementIntheList();
 //		groupingByMultipleFields();
@@ -391,7 +482,7 @@ public class TestOne {
 //		createMapFromStringKeyisStringValueisLength();
 //		findProduct();
 //		partitionStudent();
-		sortingSequentially();
+//		sortingSequentially();
 //		managerList.stream().filter(a-> "CSE".equals(a.getName())).collect(Collectors.toList());
 //		17. Group books by author and then by genre
 //		bookList.stream().collect(Collectors.groupingBy(Book::getAuthorName,
@@ -418,5 +509,16 @@ public class TestOne {
 //		findLongestPrefixUsingStreamAPI();
 //		varianceOfAnList();
 //		findTop3LargestStringInPara();
+//		commonBetweenList(list2, list);
+//		longestStringIntheList(nameList);
+//		grpEmployeeByDepartment();
+//		findSumOfEvenNumbers(list);
+//		sortStringListByLength(nameList);
+//		findMax(list);
+//		findFirstNonRepeatedCharacter("yydiksudds");
+//		countFrequency("djsjd");
+//		duplicateElement(list);
+		secondHighestNumber(list);
+		
 	}
 }
