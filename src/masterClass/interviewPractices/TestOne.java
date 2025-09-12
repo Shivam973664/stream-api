@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import data.StudentDataBase;
 import diliptraining.entities.Student;
@@ -474,6 +476,38 @@ public class TestOne {
 
 	}
 	
+	//sort a map by value 
+	public static void sortMapValue() {
+		Map<String,String> map = new HashMap<>();
+		map.put("a","1");
+		map.put("c","3");
+		map.put("z","2");
+		map.put("b","4");
+		map.entrySet().forEach(System.out :: print);
+		System.out.println();
+		Map<String,String> ans = map.entrySet().stream().
+				sorted((a,b)-> a.getValue().compareTo(b.getValue())).
+				collect(
+				Collectors.toMap(a-> a.getKey(), a-> a.getValue(),(a,b)-> a, LinkedHashMap :: new));
+		ans.forEach((a,b)-> System.out.println(a + " : " + b));
+	}
+	
+	public static void findLargestFrequency() {
+	String ans = nameList.stream().collect(Collectors.groupingBy(Function.identity(),
+				Collectors.counting())).entrySet().stream().max((a,b) -> a.getValue().compareTo(b.getValue())).map(a-> a.getKey()).orElse("");
+//		Integer ans = list.stream().max(Comparator.naturalOrder()).get();
+		System.out.println(ans);
+	}
+	
+	public static void findFirstDuplicateElement() {
+		List<Integer> numbers = Arrays.asList(4, 5, 6, 4, 7, 5);
+		Map.Entry<Integer,Long>ele= numbers.stream().collect(Collectors.groupingBy(Function.identity(),LinkedHashMap :: new ,Collectors.counting()
+				)).entrySet().stream().findFirst().orElse(null);
+		System.out.println(ele.getKey());
+	}
+	
+	
+	
 	public static void main(String[] args) {
 //		printKfrequentElementIntheList();
 //		groupingByMultipleFields();
@@ -518,7 +552,10 @@ public class TestOne {
 //		findFirstNonRepeatedCharacter("yydiksudds");
 //		countFrequency("djsjd");
 //		duplicateElement(list);
-		secondHighestNumber(list);
+//		secondHighestNumber(list);
+//		sortMapValue();
+//		findLargestFrequency();
+		findFirstDuplicateElement();
 		
 	}
 }
