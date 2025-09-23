@@ -1,15 +1,15 @@
 package abc.test.fechapi;
 
-@RestController
+//@RestController
 public class EmployeeController {
 	
-	@Autowired
+//	@Autowired
 	private EmployeeService empService;
 	
-	@GetMapping("/api/getUsers/{id}")
-	public RestTemplate<List<Ticket>> getData(@PathVariable Long id) {
-		return RestTemplate.ok(empService.getTicketsByUserId(id));
-	}
-	
+//	@GetMapping("/api/getUsers/{id}")
+//	public RestTemplate<List<Ticket>> getData(@PathVariable Long id) {
+//		return RestTemplate.ok(empService.getTicketsByUserId(id));
+//	}
+//	
 
 }

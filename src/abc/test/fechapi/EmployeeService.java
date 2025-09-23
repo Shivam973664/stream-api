@@ -2,14 +2,14 @@ package abc.test.fechapi;
 
 import java.util.List;
 
-@Service
+//@Service
 public class EmployeeService {
 
-	@Autowired
+//	@Autowired
 	private EmployeeRepository emprep;
 	
-	public List<Ticket> getTicketsByUserId(Long id){
-		return emprep.getByUserId(id);
-	}
+//	public List<Ticket> getTicketsByUserId(Long id){
+////		return emprep.getByUserId(id);
+//	}
 
 }

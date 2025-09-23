@@ -1,18 +1,18 @@
 package abc.test.fechapi;
 
-@Entity
-@Table(name="ticket")
+//@Entity
+//@Table(name="ticket")
 public class Ticket {
 
-	@Id
-	@GeneratedValue(strategy = GenerationStrategy.Identity)
+//	@Id
+//	@GeneratedValue(strategy = GenerationStrategy.Identity)
 	private Long id;
 	
-	@ManyToOne()
-	@JoinedColumn(name="user_id")
-	private User user;
+//	@ManyToOne()
+//	@JoinedColumn(name="user_id")
+//	private User user;
 	
-	@Column(name="name")
+//	@Column(name="name")
 	private String ticketName;
 
 	/**
@@ -32,16 +32,16 @@ public class Ticket {
 	/**
 	 * @return the user
 	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	/**
+//	 * @param user the user to set
+//	 */
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	/**
 	 * @return the ticketName
