@@ -1,9 +1,6 @@
 package abc.test.capgemini;
 
-import java.util.List;
-
-public class Test {
-
+public class RoundOne {
 	public static void main(String[] args) {
 //		AddTwoNumbersExample add= (a,b)-> {
 //			System.out.println(a+b);
