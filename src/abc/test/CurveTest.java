@@ -8,7 +8,8 @@ import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 public class CurveTest {
-
+	
+//Given String reverse the words.
 	public static void helper(String input) {
 		String []words = input.split(" ");
 		List<String> res = new ArrayList<>();
@@ -32,6 +33,7 @@ public class CurveTest {
 		
 	}
 	
+//	Given List of integer and k find the kth largest value in this list.
 	public static void findKthLargest(List<Integer> list, Integer k) {
 		
 		TreeSet<Integer> set= new TreeSet<Integer>((a,b)-> b.compareTo(a));

@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class HSCMangerialRound {
 
+//	find all the pairs which are equal to the target value
 	public static void main(String[] args) {
 		//arr[] = [0, -1, 2, -3, 1,-1], target = -2
 		//set  : contain the values we traverse
