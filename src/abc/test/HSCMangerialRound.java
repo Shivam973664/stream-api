@@ -4,11 +4,36 @@ package abc.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class HSCMangerialRound {
+	
+//	indices below we are finding the values
+	public static void correctWayToFindAllPairs() {
+		int []arr= {0, -1, 2, -3, 1,-1};
+		int target=-2;
+		List<List<Integer>> ans = new ArrayList<>();
+		Map<Integer,List<Integer>> map = new HashMap<>();
+		for(int i=0;i<arr.length;i++) {
+			int remaining = target-arr[i];
+			if(map.containsKey(remaining)) {
+				for(int indx : map.get(remaining)) {
+//					previously already processed
+//					if(indx<i) {
+						ans.add(Arrays.asList(indx,i));
+//					}
+				}
+			}
+			map.putIfAbsent(arr[i],new ArrayList<>());
+			map.get(arr[i]).add(i);
+		}
+		System.out.println(ans);
+		
+	}
 
 //	find all the pairs which are equal to the target value
 	public static void main(String[] args) {
@@ -31,6 +56,7 @@ public class HSCMangerialRound {
 		}
 //		ans.forEach(System.out :: println);
 //		helper();
+		correctWayToFindAllPairs();
 		helper2();
 				
 	}
