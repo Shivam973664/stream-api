@@ -1,4 +1,4 @@
-package masterClass.interviewPractices.waitNotify;
+package masterClass.MultiThreading.oldLearning;
 
 ///more about threads are in javaAdditionalConceptPractice
 public class WaitAndNotifyAbout {

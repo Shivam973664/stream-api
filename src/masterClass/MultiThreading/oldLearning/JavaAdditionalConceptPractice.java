@@ -1,4 +1,4 @@
-package masterClass.interviewPractices;
+package masterClass.MultiThreading.oldLearning;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
