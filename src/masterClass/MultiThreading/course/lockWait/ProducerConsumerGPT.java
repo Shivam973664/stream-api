@@ -12,8 +12,8 @@ class ExampleLogic{
 	private int head = 0;
 	private int tail = 0;
 	private final Lock lock = new ReentrantLock();
-	private final Condition full = lock.newCondition();
-	private final Condition empty = lock.newCondition();
+	private final Condition notFull = lock.newCondition();
+	private final Condition notEmpty = lock.newCondition();
 	public ExampleLogic(int []arr,int capacity) {
 		this.arr = arr;
 		this.capacity= capacity;
@@ -24,16 +24,17 @@ class ExampleLogic{
 		try {
 			lock.lock();
 			while(count==capacity) {
-				System.out.println("Queue is full please . production is stoped");
-				full.await();
+				System.out.println("Queue is notFull please . production is stoped");
+				notFull.await();
 			}
 			Thread.sleep(1000);
-			tail= (tail+1)% capacity;
+		
 			arr[tail] = element;
+			tail= (tail+1)% capacity;
 			
-			System.out.println("Element produced succesfully: " + element);
+			System.out.println("Element produced succesnotFully: " + element);
 			count++;
-			empty.signal();
+			notEmpty.signal();
 			
 		}finally {
 			lock.unlock();
@@ -44,15 +45,15 @@ class ExampleLogic{
 		try {
 			lock.lock();
 			while(count==0) {
-				System.out.println("Queue is empty . Consumption is stoped ");
-				empty.await();
+				System.out.println("Queue is notEmpty . Consumption is stoped ");
+				notEmpty.await();
 			}
 			Thread.sleep(1000);
-			System.out.println("Consumed Element : " + arr[tail]);
+			System.out.println("Consumed Element : " + arr[head]);
 			arr[head]=0;
 			head= (head+1)%capacity;
 			count--;
-			full.signal();
+			notFull.signal();
 			
 		}finally {
 			lock.unlock();
