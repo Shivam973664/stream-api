@@ -44,6 +44,7 @@ public class CallableExample {
 			Future<String> future = exe.submit(new Processor(i + 1));
 			list.add(future);
 		}
+		System.out.println("THread Future is created ");
 		for (Future<String> f : list) {
 			try {
 				String ans = f.get();
@@ -53,6 +54,7 @@ public class CallableExample {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("Application Ended");
 
 	}
 }
