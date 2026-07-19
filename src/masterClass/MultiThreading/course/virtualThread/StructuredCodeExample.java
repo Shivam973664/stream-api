@@ -53,6 +53,7 @@ class StructuredExampleValidationFailure implements Callable<String>{
 		System.out.println("Starting of thread : " + Thread.currentThread());
 		Thread.sleep(timestamp);
 		if(fail) {
+			System.out.println("Exception found in thread : " + Thread.currentThread());
 			throw new RuntimeException("Failure due to Server down");
 		}
 		System.out.println("Completing Thread : " + Thread.currentThread());
@@ -65,10 +66,12 @@ public class StructuredCodeExample {
 
 	public static void main(String[] args) throws InterruptedException {
 //		firstExample();
-		falilureHandling();
+//		falilureHandling();
+		oneSuccess();
 	}
 
 	
+
 
 	private static void firstExample() throws InterruptedException {
 
@@ -110,4 +113,18 @@ public class StructuredCodeExample {
 			}
 		}
 	}
+	
+
+	private static void oneSuccess() throws InterruptedException {
+		try(var structuedTaskScope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
+			var task1 = structuedTaskScope.fork(new StructuredExampleValidationFailure(2000, "thread 1", false));
+			var task2 = structuedTaskScope.fork(new StructuredExampleValidationFailure(5000, "thread 1", false));
+			
+			structuedTaskScope.join();
+			
+			
+		}
+	}
+
+
 }
