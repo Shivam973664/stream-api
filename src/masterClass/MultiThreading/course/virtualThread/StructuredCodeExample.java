@@ -1,6 +1,7 @@
 package masterClass.MultiThreading.course.virtualThread;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.StructuredTaskScope;
 import java.util.concurrent.StructuredTaskScope.Subtask;
 import java.util.concurrent.StructuredTaskScope.Subtask.State;
@@ -67,7 +68,7 @@ public class StructuredCodeExample {
 	public static void main(String[] args) throws InterruptedException {
 //		firstExample();
 //		falilureHandling();
-		oneSuccess();
+		onSuccess();
 	}
 
 	
@@ -115,12 +116,21 @@ public class StructuredCodeExample {
 	}
 	
 
-	private static void oneSuccess() throws InterruptedException {
-		try(var structuedTaskScope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
-			var task1 = structuedTaskScope.fork(new StructuredExampleValidationFailure(2000, "thread 1", false));
-			var task2 = structuedTaskScope.fork(new StructuredExampleValidationFailure(5000, "thread 1", false));
+	private static void onSuccess() throws InterruptedException {
+		try(var scope = new StructuredTaskScope.ShutdownOnSuccess<String>()) {
+			var task1 = scope.fork(new StructuredExampleValidationFailure(5000, "thread 1", false));
+			var task2 = scope.fork(new StructuredExampleValidationFailure(2000, "thread 2", true));
 			
-			structuedTaskScope.join();
+			scope.join();
+			
+			try {
+//				observation :- the first right result will be printed 
+				String res = scope.result();
+				System.out.println("Result from any one : "+ res);
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 		}
