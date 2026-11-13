@@ -17,7 +17,7 @@ class ProducerABQ implements Runnable{
 		while(true) {
 			
 			try {
-				abq.add(count++);
+				abq.put(count++);
 				Thread.sleep(1000);
 				System.out.println("Production of element "+ count + " is completed");
 			} catch (InterruptedException e) {
